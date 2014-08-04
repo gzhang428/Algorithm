@@ -64,4 +64,27 @@ public class Graph {
 		}
 		E --;
 	}
+
+	public boolean hasEdge(int start, int end) {
+		List<Edge> edges = vertice[start].edges;
+		for (Iterator<Edge> it = edges.iterator(); it.hasNext(); ){
+			Edge e = it.next();
+			if (e.end.index  == end){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Edge getEdge(int start, int end) {
+		List<Edge> edges = vertice[start].edges;
+		for (Iterator<Edge> it = edges.iterator(); it.hasNext(); ){
+			Edge e = it.next();
+			if (e.end.index  == end){
+				return e;
+			}
+		}
+		return null;
+		
+	}
 }

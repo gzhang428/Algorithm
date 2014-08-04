@@ -13,7 +13,7 @@ public class Knapsack {
 	public static void main(String[] args) {
 		Knapsack knapsack = new Knapsack();
 		List<Item> items = knapsack.readItems("D:/knapsack1.txt");
-		int value = knapsack.find2(items, 6);
+		int value = knapsack.find(items, 6);
 		System.out.println(value);
 	}
 
