@@ -4,12 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import algorithm.Combination;
@@ -26,13 +22,80 @@ public class TSP {
 
 	private double find(Point[] points) {
 		int n = points.length;
+		float[][] distances = getDistances(points);
+		float[][] a = new float[(int) Math.pow(2, n)][n];
+		System.out.println("memory allocated");
 		
-		return 0;
-	
+		for (int i = 0; i < a.length; i++){
+			for (int j = 0; j < n; j++){
+				a[i][j] = Float.MAX_VALUE;
+			}
+		}
+		a[1][0] = 0;
+		
+		for (int i = 2; i <= n; i++){
+			System.out.println(i);
+			for (Set<Integer> pointSet: getPointSetsWithSize(n, i)){
+				int index = convertSetToIndex(pointSet);
+				for (Iterator<Integer> it1 = pointSet.iterator(); it1.hasNext(); ){
+					int j = it1.next();
+					if (j != 0){
+						int prevIndex = index & ~(1 << j); // set j position to 0;
+						float min = Float.MAX_VALUE;
+						for (Iterator<Integer> it2 = pointSet.iterator(); it2.hasNext();){
+							int k = it2.next();
+							if (k != j){
+								float dist = sum(a[prevIndex][k], distances[k][j]);
+								if (dist < min){
+									min = dist;
+								}
+							}
+						}
+						a[index][j] = min;
+					}
+				}
+			}
+		}
+		
+		float min = Float.MAX_VALUE;
+		for (int j = 1; j < n; j++){
+			float dist = sum(a[a.length - 1][j], distances[j][0]);
+			if (dist < min){
+				min = dist;
+			}
+		}
+		return min;
 	}
 
-	private double getDistance(Point point1, Point point2) {
-		return Math.sqrt((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y) );
+	private float[][] getDistances(Point[] points) {
+		int n = points.length;
+		float[][] dist = new float[n][n];
+		for (int i = 0; i < n; i++){
+			for (int j = 0; j < n; j++){
+				dist[i][j] = getDistance(points[i], points[j]);
+			}
+		}
+		return dist;
+ 	}
+	
+	private float getDistance(Point point1, Point point2) {
+		return (float) Math.sqrt((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y) );
+	}
+	
+	private float sum(float a, float d) {
+		if (a == Float.MAX_VALUE || d == Float.MAX_VALUE){
+			return Float.MAX_VALUE;
+		} else {
+			return a + d;
+		}
+	}
+
+	private int convertSetToIndex(Set<Integer> pointSet) {
+		int res = 0;
+		for (int i: pointSet){
+			res = res | 1 << i;
+		}
+		return res;
 	}
 
 	private List<Set<Integer>> getPointSetsWithSize(int n, int size) {
@@ -57,8 +120,8 @@ public class TSP {
 			int i = 0;
 			while((line = br.readLine()) != null){
 				String[] pair = line.split(" ");
-				double x = Double.parseDouble(pair[0]);
-				double y = Double.parseDouble(pair[1]);
+				float x = Float.parseFloat(pair[0]);
+				float y = Float.parseFloat(pair[1]);
 				Point p = new Point(i, x, y);
 				points[i] = p;
 				i ++;
@@ -76,10 +139,10 @@ public class TSP {
 
 	public class Point {
 		public int index;
-		public double x;
-		public double y;
+		public float x;
+		public float y;
 		
-		public Point(int index, double x, double y){
+		public Point(int index, float x, float y){
 			this.index = index;
 			this.x = x;
 			this.y = y;
@@ -91,13 +154,4 @@ public class TSP {
 		}
 
 	}
-	
-	private double sum(double a, double d) {
-		if (a == Double.MAX_VALUE || d == Double.MAX_VALUE){
-			return Double.MAX_VALUE;
-		} else {
-			return a + d;
-		}
-	}
-
 }
