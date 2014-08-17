@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import algorithm.MinHeap;
+import algorithm.UnionFind;
 
 public class MST {
 
@@ -13,10 +16,8 @@ public class MST {
 		MST mst = new MST();
 		Graph g = mst.readGraph("D:/edges.txt");
 		//Graph g = mst.createGraph();
-		System.out.println(g);
 		try {
-			Graph minimalSpinningTree = mst.find(g);
-			System.out.println(minimalSpinningTree);
+			Graph minimalSpinningTree = mst.findKruskal(g);
 			int cost = 0;
 			for (Vertex v: minimalSpinningTree.vertice){
 				for (Edge e: v.edges){
@@ -30,8 +31,24 @@ public class MST {
 		
 	}
 
+	
+	public Graph findKruskal(Graph g){
+		Graph minimalSpinningTree = new Graph(g.V, true);
+		List<Edge> edges = g.getEdges();
+		Collections.sort(edges);
+		UnionFind uf = new UnionFind(g.V);
+		for (int i = 0; i < edges.size(); i += 2 ){
+			Edge e = edges.get(i);
+			if (uf.find(e.start.index) != uf.find(e.end.index)){
+				uf.union(e.start.index, e.end.index);
+				minimalSpinningTree.addEdge(e.start.index, e.end.index, e.weight);
+			}
+		}
+		return minimalSpinningTree;
+	}
+	
 
-	public Graph find(Graph g) throws Exception {
+	public Graph findPrim(Graph g) throws Exception {
 		Graph minimalSpinningTree = new Graph(g.V, true);
 		Vertex startVertex = g.vertice[0];
 		startVertex.distance = 0;

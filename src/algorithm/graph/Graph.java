@@ -1,5 +1,6 @@
 package algorithm.graph;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -86,5 +87,13 @@ public class Graph {
 		}
 		return null;
 		
+	}
+
+	public List<Edge> getEdges() {
+		List<Edge> edges = new ArrayList<>();
+		for (Vertex v: vertice){
+			edges.addAll(v.edges);
+		}
+		return edges;
 	}
 }
