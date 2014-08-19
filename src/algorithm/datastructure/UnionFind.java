@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.datastructure;
 
 import java.util.Arrays;
 
@@ -18,7 +18,7 @@ public class UnionFind {
 		}
 	}
 	
-	public int getCount(){
+	public int count(){
 		return count;
 	}
 	

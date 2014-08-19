@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import algorithm.MinHeap;
+import algorithm.datastructure.MinHeap;
 
 public class DijkstraShortestPath {
 
@@ -18,11 +18,9 @@ public class DijkstraShortestPath {
 		Graph g = dijkstraShortestPath.readGraph("dijkstraData.txt");
 		int d = dijkstraShortestPath.findShortestPath(g, start, end);
 		System.out.println(d);
-		try{
 		Graph g2 = dijkstraShortestPath.readGraph("dijkstraData.txt");
 		int d2 = dijkstraShortestPath.findShortestPathWithHeap(g2, start, end );
 		System.out.println(d2);
-		}catch(Exception e){}
 	}
 
 	private Graph readGraph(String file) {
@@ -81,7 +79,7 @@ public class DijkstraShortestPath {
 	}
 	
 	
-	public int findShortestPathWithHeap(Graph g, int start, int end) throws Exception{
+	public int findShortestPathWithHeap(Graph g, int start, int end) {
 		Vertex startVertex = g.vertice[start];
 		startVertex.distance = 0;
 		MinHeap<Vertex> heap = new MinHeap<Vertex>(g.vertice);

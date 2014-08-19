@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.datastructure;
 
 
 public class MinHeap<T extends Comparable<T>> extends Heap<T> {
@@ -44,14 +44,14 @@ public class MinHeap<T extends Comparable<T>> extends Heap<T> {
 		array[pos] = t;
 	}
 	
-	public T findMin() throws Exception{
+	public T findMin() {
 		return findRoot();
 	}
 	
-	public T extractMin() throws Exception{
+	public T extractMin() {
 		return extractRoot();
 	}
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args){
 		Double[] a = {5., 4., 7., 2., 8., 9., 1., 3., 0., 6.};
 		MaxHeap<Double> h = new MaxHeap<Double>(a);
 		h.print();

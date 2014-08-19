@@ -1,4 +1,4 @@
-package algorithm.dynamicprogramming;
+package algorithm;
 
 public class SequenceAlgnment {
 	

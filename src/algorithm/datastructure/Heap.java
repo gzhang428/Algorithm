@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.datastructure;
 
 import java.util.Arrays;
 
@@ -47,9 +47,9 @@ public abstract class Heap<T extends Comparable<T>> {
 		percollateUp(size);
 	}
 	
-	public void delete(T t) throws Exception {
+	public void delete(T t) {
 		if (isEmpty()){
-			throw new Exception("Empty heap");
+			throw new RuntimeException("Empty heap");
 		}
 		int pos = -1;
 		for (int i = 1; i < array.length; i++){
@@ -59,14 +59,14 @@ public abstract class Heap<T extends Comparable<T>> {
 			}
 		}
 		if (pos == -1){
-			throw new Exception("Item not in heap");
+			throw new RuntimeException("Item not in heap");
 		}
 		deletePos(pos);
 	}
 
-	public void deletePos(int pos) throws Exception {
+	public void deletePos(int pos) {
 		if (pos < 1 || pos > size){
-			throw new Exception("Wrong position");
+			throw new RuntimeException("Wrong position");
 		}
 		array[pos] = array[size];
 		size --;
@@ -75,18 +75,18 @@ public abstract class Heap<T extends Comparable<T>> {
 	}
 	
 
-	protected T findRoot() throws Exception {
+	protected T findRoot(){
 		if (isEmpty()) {
-			throw new Exception("Empty heap");
+			throw new RuntimeException("Empty heap");
 		}
 		return array[1];
 	}
 
 	
 
-	protected T extractRoot() throws Exception{
+	protected T extractRoot() {
 		if (isEmpty()) {
-			throw new Exception("Empty heap");
+			throw new RuntimeException("Empty heap");
 		}
 		T min = array[1];
 		array[1] = array[size];

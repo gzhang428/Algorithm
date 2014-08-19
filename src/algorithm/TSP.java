@@ -1,4 +1,4 @@
-package algorithm.dynamicprogramming;
+package algorithm;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import algorithm.Combination;
 
 public class TSP {
 	private Combination<Integer> conbination = new Combination<>();

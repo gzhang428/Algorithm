@@ -2,7 +2,8 @@ package algorithm.graph;
 
 import java.util.List;
 
-import algorithm.Stack;
+import algorithm.datastructure.ArrayBasedStack;
+import algorithm.datastructure.Stack;
 
 public class DFS {
 
@@ -10,15 +11,11 @@ public class DFS {
 		DFS dfs = new DFS();
 		Graph g = dfs.createGraph();
 		System.out.println(g);
-		try {
-			dfs.search(g, 1);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		dfs.search(g, 1);
 		System.out.println(g);
 	}
-	public void search(Graph g, int start) throws Exception {
-		Stack<Vertex> stack = new Stack<Vertex>();
+	public void search(Graph g, int start) {
+		Stack<Vertex> stack = new ArrayBasedStack<Vertex>();
 		Vertex startVertex = g.vertice[start];
 		startVertex.visited = true;
 		stack.push(startVertex);

@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import algorithm.MinHeap;
-import algorithm.UnionFind;
+import algorithm.datastructure.MinHeap;
+import algorithm.datastructure.UnionFind;
 
 public class MST {
 
@@ -16,18 +16,14 @@ public class MST {
 		MST mst = new MST();
 		Graph g = mst.readGraph("D:/edges.txt");
 		//Graph g = mst.createGraph();
-		try {
-			Graph minimalSpinningTree = mst.findKruskal(g);
-			int cost = 0;
-			for (Vertex v: minimalSpinningTree.vertice){
-				for (Edge e: v.edges){
-					cost += e.weight;
-				}
+		Graph minimalSpinningTree = mst.findKruskal(g);
+		int cost = 0;
+		for (Vertex v: minimalSpinningTree.vertice){
+			for (Edge e: v.edges){
+				cost += e.weight;
 			}
-			System.out.println(cost);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		System.out.println(cost);
 		
 	}
 
@@ -48,7 +44,7 @@ public class MST {
 	}
 	
 
-	public Graph findPrim(Graph g) throws Exception {
+	public Graph findPrim(Graph g)  {
 		Graph minimalSpinningTree = new Graph(g.V, true);
 		Vertex startVertex = g.vertice[0];
 		startVertex.distance = 0;

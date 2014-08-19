@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import algorithm.Stack;
+import algorithm.datastructure.ArrayBasedStack;
+import algorithm.datastructure.Stack;
 
 public class SCC {
 
@@ -24,9 +25,9 @@ public class SCC {
 		}
 	}
 	
-	private List<List<Vertex>> findSCCs(Graph g) throws Exception {
+	private List<List<Vertex>> findSCCs(Graph g) {
 		List<List<Vertex>> res = new ArrayList<>();
-		Stack<Vertex> stack =new Stack<>();
+		Stack<Vertex> stack =new ArrayBasedStack<>();
 		while(stack.size() < g.V){
 			int start = 0;
 			for (int i = 0; i < g.V; i++){
@@ -53,9 +54,9 @@ public class SCC {
 		return res;
 	}
 
-	private List<Vertex> dfsAndAddGetOneSCC(Graph g, int start) throws Exception {
+	private List<Vertex> dfsAndAddGetOneSCC(Graph g, int start)  {
 		List<Vertex> res = new ArrayList<>();
-		Stack<Vertex> stack = new Stack<Vertex>();
+		Stack<Vertex> stack = new ArrayBasedStack<Vertex>();
 		Vertex startVertex = g.vertice[start];
 		startVertex.visited = true;
 		res.add(startVertex);

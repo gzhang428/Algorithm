@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.datastructure;
 
 public class MaxHeap<T extends Comparable<T>> extends Heap<T> {
 
@@ -45,15 +45,15 @@ public class MaxHeap<T extends Comparable<T>> extends Heap<T> {
 		array[pos] = t;
 	}
 	
-	public T findMax() throws Exception{
+	public T findMax() {
 		return findRoot();
 	}
 	
-	public T extractMax() throws Exception{
+	public T extractMax() {
 		return extractRoot();
 	}
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		Double[] a = {5., 4., 7., 2., 8., 9., 1., 3., 0., 6.};
 		MaxHeap<Double> h = new MaxHeap<Double>(a);
 		h.print();

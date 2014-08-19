@@ -1,7 +1,8 @@
-package algorithm.closestpair;
+package algorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -10,19 +11,21 @@ import java.util.Set;
 public class ClosestPair {
 
 	public static void main(String[] args) {
-		List<Point> points = new ArrayList<Point>();
-		
-		
-		Random r = new Random();
-		for (int i = 0; i < 100000; i ++){
-			points.add(new Point(r.nextInt(), r.nextInt()));
-		}
-		
 		ClosestPair closestPair = new ClosestPair();
+		List<Point> points = closestPair.createPoints();
 		Pair pair1 = closestPair.bruteForce(points);
 		System.out.println(pair1);
 		Pair pair2 = closestPair.divideAndConque(points);
 		System.out.println(pair2);
+	}
+
+	private List<Point> createPoints() {
+		List<Point> points = new ArrayList<Point>();
+		Random r = new Random();
+		for (int i = 0; i < 100000; i ++){
+			points.add(new Point(r.nextInt(), r.nextInt()));
+		}
+		return points;
 	}
 
 	private Pair divideAndConque(List<Point> points) {
@@ -134,5 +137,63 @@ public class ClosestPair {
 	
 	private double getDistance(Point start, Point end) {
 		return Math.sqrt((start.x - end.x) * (start.x - end.x) + (start.y - end.y) * (start.y - end.y));
+	}
+	
+	public class Pair {
+		public Point start;
+		public Point end;
+		public double distance;
+		
+		
+		public Pair(Point start, Point end){
+			this.start = start;
+			this.end = end;
+		}
+		
+		public void updateDistance(){
+			if (start == null || end == null){
+				distance = Double.MAX_VALUE;
+			} else {
+				distance =  Math.sqrt((start.x - end.x) * (start.x - end.x) + (start.y - end.y) * (start.y - end.y));
+			}
+		}
+
+		public String toString(){
+			return String.format("start=%s end=%s distance=%f", start, end, distance);
+		}
+	}
+	
+	public class Point {
+		public double x;
+		public double y;
+		
+		public Point(double x, double y){
+			this.x = x;
+			this.y = y;
+		}
+		
+		public String toString(){
+			return String.format("(x=%f, y=%f)", x, y);
+		}
+	}
+	
+	
+
+	public class PointComparator implements Comparator<Point> {
+		String sortDimension;
+
+		public PointComparator(String sortDimension) {
+			this.sortDimension = sortDimension;
+		}
+
+		@Override
+		public int compare(Point p0, Point p1) {
+			if (sortDimension.equals("x")){
+				return (int) Math.signum(p0.x - p1.x);
+			} else {
+				return (int) Math.signum(p0.y - p1.y);
+			}
+		}
+
 	}
 }

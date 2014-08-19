@@ -2,7 +2,8 @@ package algorithm.graph;
 
 import java.util.List;
 
-import algorithm.Queue;
+import algorithm.datastructure.ArrayBasedQueue;
+import algorithm.datastructure.Queue;
 
 
 public class BFS {
@@ -21,8 +22,8 @@ public class BFS {
 	}
 
 
-	public void search(Graph g, int start) throws Exception {
-		Queue<Vertex> queue = new Queue<Vertex>();
+	public void search(Graph g, int start){
+		Queue<Vertex> queue = new ArrayBasedQueue<Vertex>();
 		Vertex startVertex = g.vertice[start];
 		startVertex.distance = 0;
 		startVertex.visited = true;

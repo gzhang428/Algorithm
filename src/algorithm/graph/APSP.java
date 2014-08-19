@@ -1,12 +1,9 @@
-package algorithm.dynamicprogramming;
+package algorithm.graph;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
-import algorithm.graph.Edge;
-import algorithm.graph.Graph;
 
 public class APSP {
 

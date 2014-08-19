@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import algorithm.datastructure.UnionFind;
+
 public class Clustering {
 
 	public class Edge implements Comparable<Edge>{
@@ -65,7 +67,7 @@ public class Clustering {
 				}
 			}
 		}
-		System.out.println(uf.getCount());
+		System.out.println(uf.count());
 		
 		for (Entry<Integer, Integer> e: indexes.entrySet()){
 			int node = e.getKey();
@@ -82,7 +84,7 @@ public class Clustering {
 				}
 			}
 		}
-		System.out.println(uf.getCount());
+		System.out.println(uf.count());
 	}
 
 	private Map<Integer, Integer> readIndex(String file, int bit) {
@@ -123,7 +125,7 @@ public class Clustering {
 			if (uf.find(e.start) != uf.find(e.end)){
 				uf.union(e.start, e.end);
 			}
-			if (uf.getCount() == k - 1){
+			if (uf.count() == k - 1){
 				break;
 			}
 		}

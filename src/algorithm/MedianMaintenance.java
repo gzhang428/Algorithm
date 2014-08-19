@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import algorithm.datastructure.MaxHeap;
+import algorithm.datastructure.MinHeap;
+
 public class MedianMaintenance {
 	private MinHeap<Integer> largeHalf;
 	private MaxHeap<Integer> smallHalf;
@@ -24,16 +27,11 @@ public class MedianMaintenance {
 			int sum = 0;
 			while((line = br.readLine()) != null){
 				int n = Integer.parseInt(line);
-				try {
-					System.out.println("insert: " + n);
-					int median = mm.addAndGetMedian(n);
-					System.out.println("median: " + median);
-					System.out.println("======================");
-					sum += median;
-					
-				} catch(Exception e){
-					e.printStackTrace();
-				}
+				System.out.println("insert: " + n);
+				int median = mm.addAndGetMedian(n);
+				System.out.println("median: " + median);
+				System.out.println("======================");
+				sum += median;
 			}
 			br.close();
 			System.out.println(sum);
@@ -44,7 +42,7 @@ public class MedianMaintenance {
 		}
 	}
 
-	private int addAndGetMedian(int n) throws Exception {
+	private int addAndGetMedian(int n) {
 		if (smallHalf.isEmpty()) {
 			smallHalf.insert(n);
 		} else {
