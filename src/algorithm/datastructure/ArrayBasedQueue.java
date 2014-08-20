@@ -1,13 +1,12 @@
 package algorithm.datastructure;
 
-import java.util.Arrays;
-
-
 public class ArrayBasedQueue<T> implements Queue<T> {
 	private static final int DEFAULT_CAPACITY = 10;
 	private T[] array;
 	private int tail;
 	private int head;
+	private int size;
+	private int capacity;
 	
 	public ArrayBasedQueue(){
 		this(DEFAULT_CAPACITY);
@@ -17,32 +16,63 @@ public class ArrayBasedQueue<T> implements Queue<T> {
 		array = (T[]) new Object[capacity];
 		tail = -1;
 		head = 0;
+		size = 0;
+		this.capacity = capacity;
 	}
 
 	public boolean isEmpty(){
-		return (head - tail == 1);
+		return (size == 0);
 	}
 	
 	public int size(){
-		return (tail - head + 1);
+		return size;
+	}
+	
+	private boolean isFull(){
+		return (size == capacity);
 	}
 	
 	public void enqueue(T t){
-		if (tail >= array.length - 1){
+		if (isFull()){
 			resize();
 		}
-		tail ++;
+		tail = (tail + 1) % capacity;
 		array[tail] = t;
+		size ++;
 	}
 	
 	private void resize() {
-		array = Arrays.copyOf(array, array.length * 2);
+		T[] newArray = (T[]) new Object[capacity *  2];
+		for (int i = 0; i < size; i++){
+			newArray[i] = array[ (i + head) % capacity];
+		}
+		capacity *= 2;
+		head = 0;
+		tail = size - 1;
+		array = newArray;
 	}
 
 	public T dequeue() {
 		if(isEmpty()){
 			throw new RuntimeException();
 		}
-		return array[head++];
+		T res = array[head];
+		head = (head + 1) % capacity;
+		size --;
+		return res ;
+	}
+	
+	
+	public static void main(String[] args){
+		Queue<Integer> q = new ArrayBasedQueue<Integer>(4);
+		q.enqueue(5);
+		q.enqueue(3);
+		q.dequeue();
+		q.dequeue();
+		q.enqueue(2);
+		q.enqueue(6);
+		q.enqueue(8);
+		q.enqueue(7);
+		q.enqueue(9);
 	}
 }
