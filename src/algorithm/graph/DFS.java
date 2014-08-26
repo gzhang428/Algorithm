@@ -1,11 +1,16 @@
 package algorithm.graph;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import algorithm.datastructure.ArrayStack;
 import algorithm.datastructure.Stack;
 
 public class DFS {
+
+	public interface IFunction {
+		void execute(Vertex currentVertex);
+	}
 
 	public static void main(String[] args) {
 		DFS dfs = new DFS();
@@ -14,10 +19,12 @@ public class DFS {
 		dfs.search(g, 1);
 		System.out.println(g);
 	}
-	public void search(Graph g, int start) {
+	public List<Vertex> search(Graph g, int start) {
+		List<Vertex> res = new ArrayList<>();
 		Stack<Vertex> stack = new ArrayStack<Vertex>();
 		Vertex startVertex = g.vertice[start];
 		startVertex.visited = true;
+		res.add(startVertex);
 		stack.push(startVertex);
 		while(!stack.isEmpty()){
 			Vertex v = stack.pop();
@@ -26,10 +33,25 @@ public class DFS {
 				Vertex vertex = edge.end;
 				if (!vertex.visited){
 					vertex.visited = true;
+					res.add(vertex);
 					stack.push(vertex);
 				}
 			}
 		}
+		return res;
+	}
+	
+
+	public void recursiveSearch(Graph g, int start, IFunction f){
+		Vertex currentVertex = g.vertice[start];
+		currentVertex.visited = true;
+		for (Edge edge:currentVertex.edges){
+			Vertex endVertex = edge.end;
+			if (!endVertex.visited){
+				recursiveSearch(g, endVertex.index, f);
+			}
+		}
+		f.execute(currentVertex);
 	}
 	
 	private Graph createGraph() {

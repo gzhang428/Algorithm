@@ -1,5 +1,6 @@
 package algorithm.graph;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import algorithm.datastructure.ArrayQueue;
@@ -13,20 +14,18 @@ public class BFS {
 		BFS bfs  = new BFS();
 		Graph g = bfs.createGraph();
 		System.out.println(g);
-		try {
-			bfs.search(g, 0);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		bfs.search(g, 0);
 		System.out.println(g);
 	}
 
 
-	public void search(Graph g, int start){
+	public List<Vertex> search(Graph g, int start){
+		List<Vertex> res = new ArrayList<>();
 		Queue<Vertex> queue = new ArrayQueue<Vertex>();
 		Vertex startVertex = g.vertice[start];
 		startVertex.distance = 0;
 		startVertex.visited = true;
+		res.add(startVertex);
 		queue.enqueue(startVertex);
 		while(!queue.isEmpty()){
 			Vertex v = queue.dequeue();
@@ -36,10 +35,12 @@ public class BFS {
 				if (!vertex.visited){
 					vertex.distance = v.distance + 1;
 					vertex.visited  = true;
+					res.add(vertex);
 					queue.enqueue(vertex);
 				}
 			}
 		}
+		return res;
 	}
 
 	
