@@ -2,7 +2,7 @@ package algorithm.graph;
 
 import java.util.List;
 
-import algorithm.datastructure.ArrayBasedStack;
+import algorithm.datastructure.ArrayStack;
 import algorithm.datastructure.Stack;
 
 public class DFS {
@@ -15,7 +15,7 @@ public class DFS {
 		System.out.println(g);
 	}
 	public void search(Graph g, int start) {
-		Stack<Vertex> stack = new ArrayBasedStack<Vertex>();
+		Stack<Vertex> stack = new ArrayStack<Vertex>();
 		Vertex startVertex = g.vertice[start];
 		startVertex.visited = true;
 		stack.push(startVertex);

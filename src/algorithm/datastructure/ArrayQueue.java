@@ -1,6 +1,6 @@
 package algorithm.datastructure;
 
-public class ArrayBasedQueue<T> implements Queue<T> {
+public class ArrayQueue<T> implements Queue<T> {
 	private static final int DEFAULT_CAPACITY = 10;
 	private T[] array;
 	private int tail;
@@ -8,11 +8,11 @@ public class ArrayBasedQueue<T> implements Queue<T> {
 	private int size;
 	private int capacity;
 	
-	public ArrayBasedQueue(){
+	public ArrayQueue(){
 		this(DEFAULT_CAPACITY);
 	}
 	
-	public ArrayBasedQueue(int capacity) {
+	public ArrayQueue(int capacity) {
 		array = (T[]) new Object[capacity];
 		tail = -1;
 		head = 0;
@@ -64,7 +64,7 @@ public class ArrayBasedQueue<T> implements Queue<T> {
 	
 	
 	public static void main(String[] args){
-		Queue<Integer> q = new ArrayBasedQueue<Integer>(4);
+		Queue<Integer> q = new ArrayQueue<Integer>(4);
 		q.enqueue(5);
 		q.enqueue(3);
 		q.dequeue();

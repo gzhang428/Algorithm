@@ -3,15 +3,15 @@ package algorithm.datastructure;
 import java.util.Arrays;
 
 
-public class ArrayBasedStack<T> implements Stack<T> {
+public class ArrayStack<T> implements Stack<T> {
 	private static final int DEFAULT_CAPACITY = 10;
 	private T[] array;
 	private int top;
 	
-	public ArrayBasedStack(){
+	public ArrayStack(){
 		this(DEFAULT_CAPACITY);
 	}
-	public ArrayBasedStack(int capacity) {
+	public ArrayStack(int capacity) {
 		array = (T[]) new Object[capacity];
 		top = -1;
 	}
