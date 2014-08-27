@@ -9,20 +9,17 @@ import java.util.List;
 
 import algorithm.datastructure.ArrayStack;
 import algorithm.datastructure.Stack;
+import algorithm.graph.DFS.IFunction;
 
 public class SCC {
+	DFS dfs = new DFS();
 
-	
 	public static void main(String[] args) {
 		SCC scc = new SCC();
-		Graph g = scc.readGraph("D:/sample1.txt", 9);
-//		Graph g = scc.createGraph();
-		try {
-			List<List<Vertex>> res = scc.findSCCs(g);
-			System.out.println(res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//Graph g = scc.readGraph("D:/sample1.txt", 9);
+		Graph g = scc.createGraph();
+		List<List<Vertex>> res = scc.findSCCs(g);
+		System.out.println(res);
 	}
 	
 	private List<List<Vertex>> findSCCs(Graph g) {
@@ -47,34 +44,13 @@ public class SCC {
 			Vertex v = stack.pop();
 			Vertex startVertex = gRev.vertice[v.index];
 			if (!startVertex.visited){
-				List<Vertex> oneSCC = dfsAndAddGetOneSCC(gRev, startVertex.index);
+				List<Vertex> oneSCC = dfs.search(gRev, startVertex.index);
 				res.add(oneSCC);
 			}
 		}
 		return res;
 	}
 
-	private List<Vertex> dfsAndAddGetOneSCC(Graph g, int start)  {
-		List<Vertex> res = new ArrayList<>();
-		Stack<Vertex> stack = new ArrayStack<Vertex>();
-		Vertex startVertex = g.vertice[start];
-		startVertex.visited = true;
-		res.add(startVertex);
-		stack.push(startVertex);
-		while(!stack.isEmpty()){
-			Vertex v = stack.pop();
-			List<Edge> edges = v.edges;
-			for (Edge edge: edges){
-				Vertex vertex = edge.end;
-				if (!vertex.visited){
-					vertex.visited = true;
-					res.add(vertex);
-					stack.push(vertex);
-				}
-			}
-		}
-		return res;
-	}
 
 	private Graph reverse(Graph g) {
 		Graph reversed = new Graph(g.V, true);
@@ -89,17 +65,25 @@ public class SCC {
 	}
 
 	public void dfsAndStackPush(Graph g, int start, Stack<Vertex> stack) {
-		Vertex currentVertex = g.vertice[start];
-		currentVertex.visited = true;
-		for (Edge edge:currentVertex.edges){
-			Vertex endVertex = edge.end;
-			if (!endVertex.visited){
-				dfsAndStackPush(g, endVertex.index, stack);
-			}
-		}
-	//	System.out.print(currentVertex);
-		stack.push(currentVertex);
+		IFunction stackPushFunction = new StackPushFunction(stack);
+		dfs.recursiveSearch(g, start, stackPushFunction);
 	}
+	
+	public class StackPushFunction implements IFunction {
+
+		private Stack<Vertex> stack;
+
+		public StackPushFunction(Stack<Vertex> stack) {
+			this.stack = stack;
+		}
+
+		@Override
+		public void execute(Vertex currentVertex) {
+			stack.push(currentVertex);
+		}
+
+	}
+	
 	
 	private Graph createGraph() {
 		Graph g = new Graph(9, true);
