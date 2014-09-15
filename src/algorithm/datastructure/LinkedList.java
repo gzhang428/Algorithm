@@ -1,5 +1,8 @@
 package algorithm.datastructure;
 
+// 如果操作head node，要检查isEmpty()
+// 如果需要prev，要单独检查head node
+// 遍历nodes中每次循环检查新的node是否为null
 public class LinkedList<T> {
 
 	private LinkedNode<T> head;
@@ -76,13 +79,14 @@ public class LinkedList<T> {
 	public void addLast(T t){
 		if (isEmpty()){
 			addFirst(t);
-		} else {
-			LinkedNode<T> node = head;
-			while(node.next != null){
-				node = node.next;
-			}
-			node.next = new LinkedNode<T>(t);
+			return;
+		} 
+		LinkedNode<T> node = head;
+		while(node.next != null){
+			node = node.next;
 		}
+		node.next = new LinkedNode<T>(t);
+		
 	}
 	
 	public T getLast(){
