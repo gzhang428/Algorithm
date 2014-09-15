@@ -23,13 +23,14 @@ public class LinkedList<T> {
 		}
 		LinkedNode<T> prev = null;
 		LinkedNode<T> node = head;
-		while(node != null && !t.equals(node.data) ){
+		while(!t.equals(node.data) ){
 			prev = node;
 			node = node.next;
+			if (node == null){
+				throw new RuntimeException("Cannot find element");
+			}
 		}
-		if (node == null){
-			throw new RuntimeException("Cannot find element");
-		}
+		
 		LinkedNode<T> newNode = new LinkedNode<>(n);
 		prev.next = newNode;
 		newNode.next = node;
@@ -161,12 +162,12 @@ public class LinkedList<T> {
 		
 		LinkedNode<T> node = head;
 		LinkedNode<T> prev = null;
-		while(node != null && !t.equals(node.data)){
+		while(!t.equals(node.data)){
 			prev = node;
 			node = node.next;
-		}
-		if (node == null){
-			throw new RuntimeException("Cannot find element");
+			if (node == null){
+				throw new RuntimeException("Cannot find element");
+			}
 		}
 		prev.next = node.next;
 		
