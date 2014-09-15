@@ -45,12 +45,13 @@ public class LinkedList<T> {
 			throw new RuntimeException("Empty List");
 		}
 		LinkedNode<T> node = head;
-		while(node != null && !t.equals(node.data) ){
+		while( !t.equals(node.data) ){
 			node = node.next;
+			if (node == null){
+				throw new RuntimeException("Cannot find element");
+			}
 		}
-		if (node == null){
-			throw new RuntimeException("Cannot find element");
-		}
+	
 		LinkedNode<T> newNode = new LinkedNode<>(n);
 		newNode.next = node.next;
 		node.next = newNode;
