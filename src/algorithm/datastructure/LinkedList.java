@@ -1,6 +1,9 @@
 package algorithm.datastructure;
 
-public class LinkedList<T> {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class LinkedList<T> implements Iterable<T>{
 
 	private LinkedNode<T> head;
 	
@@ -225,6 +228,65 @@ public class LinkedList<T> {
 		System.out.println(list);
 		list.removeLast();
 		System.out.println(list);
+		System.out.println("==================");
+		Iterator<Integer> it = list.iterator();
+		System.out.println(it.next());
+		it.next();
+		it.remove();
+		System.out.println(list);
 	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new LinkedListIterator();
+	}
+	
+	public class LinkedListIterator implements Iterator<T> {
+
+		private LinkedNode<T> next;
+		private LinkedNode<T> cur;
+		
+		public LinkedListIterator(){
+			next = head;
+			cur = null;
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return next != null;
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext()){
+				throw new NoSuchElementException();
+			}
+			cur = next;
+			next = next.next;
+			return cur.data;
+		}
+		
+		@Override
+		public void remove(){
+			if (cur == null){
+				throw new IllegalStateException();
+			}
+			if (cur == head){
+				head = head.next;
+				cur = null;
+				return;
+			}
+			LinkedNode<T> node = head;
+			LinkedNode<T> prev = null;
+			while(node != cur){
+				prev = node;
+				node = node.next;
+			}
+			prev.next = node.next;
+			cur = null;
+		}
+
+	}
+
 
 }
