@@ -1,8 +1,5 @@
 package algorithm.datastructure;
 
-// 如果操作head node，要检查isEmpty()
-// 如果需要prev，要单独检查head node
-// 遍历nodes中每次循环检查新的node是否为null
 public class LinkedList<T> {
 
 	private LinkedNode<T> head;
@@ -24,37 +21,38 @@ public class LinkedList<T> {
 			addFirst(n);
 			return;
 		}
+		
 		LinkedNode<T> prev = null;
 		LinkedNode<T> node = head;
-		while(!t.equals(node.data) ){
+		while(node != null){
+			if (t.equals(node.data)){
+				LinkedNode<T> newNode = new LinkedNode<>(n);
+				prev.next = newNode;
+				newNode.next = node;
+				return;
+			}
 			prev = node;
 			node = node.next;
-			if (node == null){
-				throw new RuntimeException("Cannot find element");
-			}
 		}
-		
-		LinkedNode<T> newNode = new LinkedNode<>(n);
-		prev.next = newNode;
-		newNode.next = node;
-		
+		throw new RuntimeException("Cannot find element");
 	}
 	
 	public void insertAfter(T t, T n){
 		if (isEmpty()){
 			throw new RuntimeException("Empty List");
 		}
+		
 		LinkedNode<T> node = head;
-		while( !t.equals(node.data) ){
-			node = node.next;
-			if (node == null){
-				throw new RuntimeException("Cannot find element");
+		while(node != null){
+			if ( t.equals(node.data)){
+				LinkedNode<T> newNode = new LinkedNode<>(n);
+				newNode.next = node.next;
+				node.next = newNode;
+				return;
 			}
+			node = node.next;
 		}
-	
-		LinkedNode<T> newNode = new LinkedNode<>(n);
-		newNode.next = node.next;
-		node.next = newNode;
+		throw new RuntimeException("Cannot find element");
 	}
 	
 	public void addFirst(T t){
@@ -87,7 +85,6 @@ public class LinkedList<T> {
 			node = node.next;
 		}
 		node.next = new LinkedNode<T>(t);
-		
 	}
 	
 	public T getLast(){
@@ -99,6 +96,24 @@ public class LinkedList<T> {
 			node = node.next;
 		}
 		return node.data;
+	}
+	
+	public void removeLast(){
+		if (isEmpty()){
+			throw new RuntimeException("Empty List");
+		}
+		if (head.next == null){
+			removeFirst();
+			return;
+		}
+		
+		LinkedNode<T> node = head;
+		LinkedNode<T> prev = null;
+		while(node.next != null){
+			prev = node;
+			node = node.next;
+		}
+		prev.next = null;
 	}
 	
 	public T get(int pos){
@@ -135,7 +150,6 @@ public class LinkedList<T> {
 		if (isEmpty()){
 			throw new RuntimeException("Empty List");
 		}
-		
 		if (pos == 0){
 			removeFirst();
 			return ;
@@ -150,16 +164,13 @@ public class LinkedList<T> {
 				throw new RuntimeException("Index out of bound");
 			}
 		}
-		
 		prev.next = node.next;
-		
 	}
 	
 	public void remove(T t){
 		if (isEmpty()){
 			throw new RuntimeException("Empty List");
 		}
-		
 		if (t.equals(head.data)){
 			removeFirst();
 			return ;
@@ -167,15 +178,15 @@ public class LinkedList<T> {
 		
 		LinkedNode<T> node = head;
 		LinkedNode<T> prev = null;
-		while(!t.equals(node.data)){
+		while(node != null){
+			if (t.equals(node.data)){
+				prev.next = node.next;
+				return;
+			}
 			prev = node;
 			node = node.next;
-			if (node == null){
-				throw new RuntimeException("Cannot find element");
-			}
 		}
-		prev.next = node.next;
-		
+		throw new RuntimeException("Cannot find element");
 	}
 	
 	public void clear(){
@@ -185,7 +196,7 @@ public class LinkedList<T> {
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		LinkedNode<T> node = head;
-		while(node != null){
+		while(node!= null){
 			sb.append(node.data).append(" ");
 			node = node.next;
 		}
@@ -211,6 +222,8 @@ public class LinkedList<T> {
 		list.insertBefore(2, 0);
 		list.insertBefore(3, 5);
 		list.insertBefore(4, 0);
+		System.out.println(list);
+		list.removeLast();
 		System.out.println(list);
 	}
 
