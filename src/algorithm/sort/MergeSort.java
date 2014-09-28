@@ -13,30 +13,30 @@ public class MergeSort extends Sort {
 	@Override
 	public void sort(int[] a){
 		int[] t = new int[a.length];
-		mergeSort(a, t, 0, a.length);
+		mergeSort(a, t, 0, a.length - 1);
 	}
 
 	private void mergeSort(int[] a, int[] t, int low, int high){
-		if(low < high - 1){
+		if(low < high){
 			int mid = (low + high) / 2;
 			mergeSort(a, t, low, mid);
-			mergeSort(a, t, mid, high);
+			mergeSort(a, t, mid + 1, high);
 			merge(a, t, low, mid, high);
 		}
 		
 	}
 
 	private void merge(int[] a, int[] t, int low, int mid, int high) {
-		for(int i = low; i < high; i++){
+		for(int i = low; i <= high; i++){
 			t[i] = a[i];
 		}
 		
 		int i = low;
-		int j = mid;
+		int j = mid + 1;
 		int k = low;
 		
 		
-		while(i < mid && j < high){
+		while(i <= mid && j <= high){
 			if(t[i] <= t[j]){
 				a[k] = t[i];
 				k++;
@@ -48,13 +48,13 @@ public class MergeSort extends Sort {
 				j++;
 			}
 		}
-		while(i < mid){
+		while(i <= mid){
 			a[k] = t[i];
 			k++;
 			i++;
 			
 		}
-		while(j < high){
+		while(j <= high){
 			a[k] = t[j];
 			k++;
 			j++;

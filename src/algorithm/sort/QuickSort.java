@@ -12,11 +12,11 @@ public class QuickSort extends Sort {
 	
 	@Override
 	public void sort(int[] a) {
-		quickSort(a, 0, a.length);
+		quickSort(a, 0, a.length - 1);
 	}
 
 	private void quickSort(int[] a, int low, int high) {
-		if (low < high - 1){
+		if (low < high){
 			int mid = partition(a, low, high);
 			quickSort(a, low, mid);
 			quickSort(a, mid + 1, high);
@@ -26,7 +26,7 @@ public class QuickSort extends Sort {
 	protected int partition(int[] a, int low, int high) {
 		int p = choosePivot(a, low, high);
 		int i = low; // last element of left part
-		for (int j = low + 1; j < high; j++){
+		for (int j = low + 1; j <= high; j++){
 			if (a[j] < p){
 				i ++;
 				swap(a, i, j);
@@ -38,12 +38,12 @@ public class QuickSort extends Sort {
 
 	// median of first, middle and last element
 	private int choosePivot(int[] a, int low, int high) {
-		int mid = (low + high - 1) / 2;
+		int mid = (low + high) / 2;
 		int pivotIndex = low;
-		if (a[mid] > Math.min(a[low], a[high - 1]) && a[mid] < Math.max(a[low], a[high - 1])){
+		if (a[mid] > Math.min(a[low], a[high]) && a[mid] < Math.max(a[low], a[high])){
 			pivotIndex = mid;
-		} else if (a[high - 1] > Math.min(a[low], a[mid]) && a[high - 1] < Math.max(a[low], a[mid])){
-			pivotIndex = high - 1;
+		} else if (a[high] > Math.min(a[low], a[mid]) && a[high ] < Math.max(a[low], a[mid])){
+			pivotIndex = high;
 		}
 		swap(a, low, pivotIndex);
 		return a[low];
