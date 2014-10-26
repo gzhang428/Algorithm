@@ -7,8 +7,8 @@ public class MaxWeightIndependentSet {
 
 	public static void main(String[] args) {
 		MaxWeightIndependentSet maxWeightIndependentSet = new MaxWeightIndependentSet();
-		int[] set = {10, 4, 5, 4};
-		int value = maxWeightIndependentSet.find(set);
+		int[] path = {10, 4, 5, 4};
+		int value = maxWeightIndependentSet.find(path);
 		System.out.println(value);
 	}
 

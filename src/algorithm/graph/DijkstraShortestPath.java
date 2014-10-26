@@ -11,16 +11,14 @@ public class DijkstraShortestPath {
 
 	public static void main(String[] args) {
 		DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath();
-		//Graph g = dijkstraShortestPath.createGraph();
+		Graph g = dijkstraShortestPath.createGraph();
 		
-		int start = 0;
-		int end = 59;
-		Graph g = dijkstraShortestPath.readGraph("dijkstraData.txt");
-		int d = dijkstraShortestPath.findShortestPath(g, start, end);
-		System.out.println(d);
-		Graph g2 = dijkstraShortestPath.readGraph("dijkstraData.txt");
-		int d2 = dijkstraShortestPath.findShortestPathWithHeap(g2, start, end );
-		System.out.println(d2);
+//		int start = 0;
+//		int end = 59;
+//		Graph g = dijkstraShortestPath.readGraph("dijkstraData.txt");
+//		int d = dijkstraShortestPath.findShortestPath(g, start, end);
+//		System.out.println(d);
+//		Graph g2 = dijkstraShortestPath.readGraph("dijkstraData.txt");
 	}
 
 	private Graph readGraph(String file) {
@@ -46,8 +44,14 @@ public class DijkstraShortestPath {
 		}
 		return g;
 	}
-
+	
 	public int findShortestPath(Graph g, int start, int end) {
+		int[] res = findShortestPathWithHeap(g, start);
+		return res[end];
+	}
+	
+
+	public int[] findShortestPath(Graph g, int start) {
 		Vertex startVertex = g.vertice[start];
 		startVertex.distance = 0;
 		while (true) {
@@ -59,27 +63,34 @@ public class DijkstraShortestPath {
 					vertex = v;
 				}
 			}
-			
 			if (vertex  == null){
-				return Integer.MAX_VALUE;
+				break;
 			}
 			
 			vertex.visited = true;
-			if (vertex == g.vertice[end]){
-				return vertex.distance;
-			}
-			
+//			if (vertex == g.vertice[end]){
+//				return vertex.distance;
+//			}
 			for (Edge edge: vertex.edges){
 				Vertex endVertex = edge.end;
-				if (!endVertex.visited && vertex.distance + edge.weight < endVertex.distance){
-					endVertex.distance = vertex.distance + edge.weight;
+				if (!endVertex.visited && sum(vertex.distance, edge.weight) < endVertex.distance){
+					endVertex.distance = sum(vertex.distance, edge.weight);
 				}
 			}
 		}
+		int[] res = new int[g.V];
+		for (Vertex v: g.vertice){
+			res[v.index] = v.distance;
+		}
+		return res;
 	}
 	
-	
 	public int findShortestPathWithHeap(Graph g, int start, int end) {
+		int[] res = findShortestPathWithHeap(g, start);
+		return res[end];
+	}
+	
+	public int[] findShortestPathWithHeap(Graph g, int start) {
 		Vertex startVertex = g.vertice[start];
 		startVertex.distance = 0;
 		MinHeap<Vertex> heap = new MinHeap<Vertex>(g.vertice);
@@ -87,19 +98,24 @@ public class DijkstraShortestPath {
 		while(!heap.isEmpty()) {
 			Vertex vertex  = heap.extractMin();
 			vertex.visited = true;
-			if (vertex == g.vertice[end]){
-				return vertex.distance;
-			}
+//			if (vertex == g.vertice[end]){
+//				return vertex.distance;
+//			}
 			for(Edge edge: vertex.edges){
 				Vertex endVertex = edge.end;
-				if (!endVertex.visited && vertex.distance + edge.weight < endVertex.distance){
+				if (!endVertex.visited && sum(vertex.distance, edge.weight) < endVertex.distance){
 					heap.delete(endVertex);
-					endVertex.distance = vertex.distance + edge.weight;
+					endVertex.distance = sum(vertex.distance, edge.weight);
 					heap.insert(endVertex);
 				}
 			}
 		}
-		return Integer.MAX_VALUE;
+		
+		int[] res = new int[g.V];
+		for (Vertex v: g.vertice){
+			res[v.index] = v.distance;
+		}
+		return res;
 	}
 	
 	private Graph createGraph() {
@@ -119,4 +135,11 @@ public class DijkstraShortestPath {
 		return g;
 	}
 
+	private int sum(int a, int b) {
+		if (a == Integer.MAX_VALUE || b == Integer.MAX_VALUE){
+			return Integer.MAX_VALUE;
+		} else {
+			return a + b;
+		}
+	}
 }

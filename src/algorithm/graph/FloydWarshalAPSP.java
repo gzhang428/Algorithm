@@ -5,20 +5,22 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class APSP {
+public class FloydWarshalAPSP {
 
 
 	public static void main(String[] args) {
-		APSP apsp = new APSP();
+		FloydWarshalAPSP apsp = new FloydWarshalAPSP();
 		Graph g = apsp.readGraph("D:/g3.txt");
 		System.out.println(g.E);
-		int[][] res = apsp.find(g);
+		int[][] res = apsp.calculate(g);
+		
 		
 		int min = Integer.MAX_VALUE;
 		for (int i = 0; i < g.V; i ++){
 			for (int j = 0; j < g.V; j++){
 				if (res[i][j] < min){
 					min = res[i][j];
+					System.out.println(i +" " + j);
 				}
 			}
 		}
@@ -26,7 +28,7 @@ public class APSP {
 	}
 
 
-	private int[][] find(Graph g) {
+	private int[][] calculate(Graph g) {
 		int n = g.V;
 		int[][][] a = new int[n + 1][n][n];
 		Edge e;
@@ -41,7 +43,7 @@ public class APSP {
 				}
 			}
 		}
-		// k: the path should use vertex (k - 1)
+		// k: the path should use first k vertex
 		for (int k = 1; k <= n; k++){
 			for(int i = 0; i < n; i++){
 				for (int j = 0; j < n; j++){

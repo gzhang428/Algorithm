@@ -96,4 +96,16 @@ public class Graph {
 		}
 		return edges;
 	}
+
+	public Graph copy() {
+		Graph g = new Graph(V, true);
+		for (Vertex v: vertice){
+			for (Edge e: v.edges){
+				g.addEdge(e.start.index, e.end.index, e.weight);
+			}
+		}
+		g.directed = directed;
+		return g;
+	}
+	
 }
