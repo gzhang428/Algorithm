@@ -1,11 +1,11 @@
 package algorithm.datastructure;
 
-public class LinkedNodeQueue<T> implements Queue<T> {
+public class LinkedQueue<T> implements Queue<T> {
 	private LinkedNode<T> head;
 	private LinkedNode<T> tail;
 	private int size;
 
-	public LinkedNodeQueue (){
+	public LinkedQueue (){
 		head = null;
 		tail = null;
 		size = 0;
@@ -46,7 +46,7 @@ public class LinkedNodeQueue<T> implements Queue<T> {
 	}
 
 	public static void main(String[] args){
-		Queue<Integer> queue = new LinkedNodeQueue<>();
+		Queue<Integer> queue = new LinkedQueue<>();
 		queue.enqueue(1);
 		queue.enqueue(2);
 		System.out.println(queue.dequeue());

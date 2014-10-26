@@ -1,10 +1,10 @@
 package algorithm.datastructure;
 
-public class LinkedNodeStack<T> implements Stack<T> {
+public class LinkedStack<T> implements Stack<T> {
 	private LinkedNode<T> top;
 	private int size;
 	
-	public LinkedNodeStack (){
+	public LinkedStack (){
 		top = null;
 		size = 0;
 	}
@@ -40,7 +40,7 @@ public class LinkedNodeStack<T> implements Stack<T> {
 	}
 	
 	public static void main(String[] args){
-		LinkedNodeStack<Integer> stack = new LinkedNodeStack<>();
+		LinkedStack<Integer> stack = new LinkedStack<>();
 		stack.push(1);
 		stack.push(2);
 		System.out.println(stack.pop());

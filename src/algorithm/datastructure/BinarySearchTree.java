@@ -168,7 +168,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	}
 	
 	public void levelOrderTraversal(){
-		Queue<TreeNode<T>> queue = new LinkedNodeQueue<>();
+		Queue<TreeNode<T>> queue = new LinkedQueue<>();
 		queue.enqueue(root);
 		while(!queue.isEmpty()){
 			TreeNode<T> node = queue.dequeue();
