@@ -15,20 +15,28 @@ public class BlockingQueue<T> {
 		while(queue.size() == capacity){
 			wait();
 		}
+		boolean shouldNotify = false;
 		if(queue.size() == 0) {
-			notifyAll();
+			shouldNotify = true;
 		}
 		queue.add(t);
+		if (shouldNotify){
+			notifyAll();
+		}
 	}
 	
 	public synchronized T dequeue() throws InterruptedException{
 		while(queue.size() == 0){
 			wait();
 		}
+		boolean shouldNotify = false;
 		if (queue.size() == capacity){
-			notifyAll();
+			shouldNotify = true;
 		}
 		T res = queue.remove();
+		if (shouldNotify){
+			notifyAll();
+		}
 		return res;
 	}
 	

@@ -36,8 +36,8 @@ public class BellmanFordShortestPath {
 			}
 		}
 		
-		int i = 1;
-		for (; i < g.V; i++){
+		int i;
+		for (i = 1; i < g.V; i++){
 			System.out.println(i);
 			for (int j = 0; j < g.V; j ++){ // j is the end node index
 				int min = Integer.MAX_VALUE;
