@@ -33,7 +33,7 @@ public class TSP {
 		
 		for (int i = 2; i <= n; i++){
 			System.out.println(i);
-			for (Set<Integer> pointSet: getPointSetsWithSize(n, i)){
+			for (List<Integer> pointSet: getPointSetsWithSize(n, i)){
 				int index = convertSetToIndex(pointSet);
 				for (Iterator<Integer> it1 = pointSet.iterator(); it1.hasNext(); ){
 					int j = it1.next();
@@ -88,7 +88,7 @@ public class TSP {
 		}
 	}
 
-	private int convertSetToIndex(Set<Integer> pointSet) {
+	private int convertSetToIndex(List<Integer> pointSet) {
 		int res = 0;
 		for (int i: pointSet){
 			res = res | 1 << i;
@@ -96,13 +96,13 @@ public class TSP {
 		return res;
 	}
 
-	private List<Set<Integer>> getPointSetsWithSize(int n, int size) {
+	private List<List<Integer>> getPointSetsWithSize(int n, int size) {
 		Integer[] pointsFromSecond = new Integer[n - 1];
 		for (int i = 1; i <n; i++){
 			pointsFromSecond[i - 1] = i;
 		}
-		List<Set<Integer>> sets = conbination.find(pointsFromSecond, size - 1);
-		for (Set<Integer> set: sets){
+		List<List<Integer>> sets = conbination.find(pointsFromSecond, size - 1);
+		for (List<Integer> set: sets){
 			set.add(0);
 		}
 		return sets;
