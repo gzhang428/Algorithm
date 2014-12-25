@@ -9,12 +9,13 @@ import java.util.Set;
 public class CombinationSum {
 
 	public static void main(String[] args) {
-		int[] num = {1};
-		List<List<Integer>> res = new CombinationSum().combinationSum(num, 1);
+		int[] num = {6,4,3,10,12};
+		List<List<Integer>> res = new CombinationSum().combinationSum(num, 28);
 		System.out.println(res);
 	}
 
-	 public List<List<Integer>> combinationSum(int[] candidates, int target) {
+	 
+  	 public List<List<Integer>> combinationSum(int[] candidates, int target) {
 	        Set<List<Integer>> res = new HashSet<>();
 	        Arrays.sort(candidates);
 	        List<Integer> r = new ArrayList<>();
@@ -27,7 +28,7 @@ public class CombinationSum {
 	    
 	    public void find(int[] candidates, int target, int start, int sum, Set<List<Integer>> res, List<Integer> r){
 	        if (target == sum){
-	            res.add(r);
+	            res.add(new ArrayList<>(r));
 	            return;      
 	        } 
 	        if (target < sum){
@@ -37,7 +38,8 @@ public class CombinationSum {
 	        for (int i = start; i < candidates.length; i++){
 	            int n = candidates[i];
 	            r.add(n);
-	            find(candidates, target, i, sum + n, res,   new ArrayList<Integer>(r));
+	            find(candidates, target, i, sum + n, res,  r );
+	            r.remove(r.size() - 1);
 	        }
 	        
 
