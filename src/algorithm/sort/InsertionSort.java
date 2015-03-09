@@ -13,14 +13,8 @@ public class InsertionSort extends Sort {
 			int i;
 			int t = a[j];
 			System.out.println("j=" + j + " t=" + t);
-			for (i = j; i > 0; i--){
-				if (a[i - 1] > t){
-					a[i] = a[i - 1];
-					System.out.println("i=" + i);
-					print(a);
-				} else{
-					break;
-				}
+			for (i = j; i > 0 && a[i - 1] > t; i--){
+				a[i] = a[i - 1];
 			}
 			a[i] = t;
 			System.out.println("i=" + i);
