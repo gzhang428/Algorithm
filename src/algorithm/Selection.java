@@ -11,19 +11,19 @@ public class Selection extends QuickSort {
 		System.out.println(n);
 	}
 
-	private int select(int[] a, int i) {
-		return randomSelect(a, 0, a.length - 1, i);
+	private int select(int[] a, int k) {
+		return randomSelect(a, 0, a.length - 1, k);
 	}
 
-	private int randomSelect(int[] a, int low, int high, int i) {
+	private int randomSelect(int[] a, int low, int high, int k) {
 		if (low < high){
 			int mid = partition(a, low, high);
-			if (i == mid) {
+			if (k == mid) {
 				return a[mid];
-			} else if (i < mid){
-				return randomSelect(a, low, mid - 1, i);
+			} else if (k < mid){
+				return randomSelect(a, low, mid - 1, k);
 			} else {
-				return randomSelect(a, mid + 1, high, i);
+				return randomSelect(a, mid + 1, high, k);
 			}
 		}
 		return a[low];

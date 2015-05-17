@@ -2,46 +2,40 @@ package algorithm.leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CombinationSum {
 
 	public static void main(String[] args) {
-		int[] num = {6,4,3,10,12};
-		List<List<Integer>> res = new CombinationSum().combinationSum(num, 28);
+		int[] num = { 10, 1, 2, 7, 6, 1, 5 };
+		List<List<Integer>> res = new CombinationSum().combinationSum2(num, 8);
 		System.out.println(res);
 	}
 
-	 
-  	 public List<List<Integer>> combinationSum(int[] candidates, int target) {
-	        Set<List<Integer>> res = new HashSet<>();
-	        Arrays.sort(candidates);
-	        List<Integer> r = new ArrayList<>();
-	        find(candidates, target, 0, 0, res, r);
-	        
-	        List<List<Integer>> result = new ArrayList<>();
-	        result.addAll(res);
-	        return result;
-	    }
-	    
-	    public void find(int[] candidates, int target, int start, int sum, Set<List<Integer>> res, List<Integer> r){
-	        if (target == sum){
-	            res.add(new ArrayList<>(r));
-	            return;      
-	        } 
-	        if (target < sum){
-	            return;
-	        }
-	        
-	        for (int i = start; i < candidates.length; i++){
-	            int n = candidates[i];
-	            r.add(n);
-	            find(candidates, target, i, sum + n, res,  r );
-	            r.remove(r.size() - 1);
-	        }
-	        
+	public List<List<Integer>> combinationSum2(int[] num, int target) {
+		List<List<Integer>> res = new ArrayList<>();
+		List<Integer> list = new ArrayList<>();
+		Arrays.sort(num);
+		sum(num, target, 0, list, res);
+		return res;
 
-	    }
+	}
+
+	private void sum(int[] num, int target, int start, List<Integer> list,
+			List<List<Integer>> res) {
+		if (target == 0) {
+			res.add(new ArrayList<>(list));
+			return;
+		}
+		if (target > 0) {
+			for (int i = start; i < num.length; i++) {
+				if (i > start && num[i] == num[i - 1]) {
+					continue;
+				}
+				list.add(num[i]);
+				sum(num, target - num[i], i + 1, list, res);
+				list.remove(list.size() - 1);
+			}
+		}
+	}
 }

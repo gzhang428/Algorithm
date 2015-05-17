@@ -10,7 +10,7 @@ public class MaxPoints {
 	public static void main(String[] args) {
 		MaxPoints mp = new MaxPoints();
 		Point[] points = mp.getPoints();
-		int res = mp.maxPoints(points );
+		int res = mp.maxPoints(points);
 		System.out.println(res);
 	}
 
@@ -25,50 +25,62 @@ public class MaxPoints {
 	class Point {
 		int x;
 		int y;
-		Point() { x = 0; y = 0; }
-		Point(int a, int b) { x = a; y = b; }
+
+		Point() {
+			x = 0;
+			y = 0;
+		}
+
+		Point(int a, int b) {
+			x = a;
+			y = b;
+		}
+		
+		public String toString(){
+			return x + ":" + y;
+		}
 	}
-	 
+
 	public int maxPoints(Point[] points) {
 		int n = points.length;
-		if (n <= 2){
+		if (n <= 2) {
 			return n;
 		}
-
-		int max = 2;
-		for (int i = 0; i < n; i++){
-			System.out.println("i=" + i);
-			Map<Double, Integer> map = new HashMap<>();
-			map.put(Double.MIN_VALUE, 1); // record number of duplicate points;
-			int dedup = 0;
-			for (int j = i + 1; j < n; j++){
-				System.out.print("j=" + j + ", ");
-				if (points[i].x == points[j].x && points[i].y == points[j].y){
-					dedup ++;
+		int res = 0;
+		for (int i = 0; i < n - 1; i++) {
+			Point p1 = points[i];
+			int duplicate = 0;
+			Map<Double, Integer> count = new HashMap<>();
+			for (int j = i + 1; j < n; j++) {
+				Point p2 = points[j];
+				if (p1.x == p2.x && p1.y == p2.y) {
+					if (duplicate == 0) {
+						duplicate = 2;
+					} else {
+						duplicate++;
+					}
 					continue;
 				}
-
-				double a;
-				if (points[i].x == points[j].x) {
-					a = Double.MAX_VALUE;   
-				} else {
-					a = 0.0 + (double)(points[i].y - points[j].y) / (double)(points[i].x - points[j].x); // 0.0 + x to solve -0 issue.
+				double a = Double.MAX_VALUE;
+				if (p1.x != p2.x) {
+					a = (double) (p1.y - p2.y) /(double) (p1.x - p2.x);
 				}
-				System.out.println("a=" + a);
-				if (map.containsKey(a)){
-					map.put(a, map.get(a) + 1);
+				if (count.containsKey(a)) {
+					count.put(a, count.get(a) + 1);
 				} else {
-					map.put(a, 2);
+					count.put(a, 2);
 				}
 			}
-			System.out.println(map);
-			for (Map.Entry<Double, Integer> entry: map.entrySet()){
-				if (entry.getValue() + dedup > max){
-					max = entry.getValue() + dedup;
+			int max = duplicate;
+			for (Map.Entry<Double, Integer> entry : count.entrySet()) {
+				int val = entry.getValue();
+				if (duplicate != 0) {
+					val = val + duplicate - 1;
 				}
+				max = Math.max(max, val);
 			}
-
+			res = Math.max(res, max);
 		}
-		return max;
+		return res;
 	}
 }

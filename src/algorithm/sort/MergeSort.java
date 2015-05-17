@@ -4,7 +4,7 @@ package algorithm.sort;
 public class MergeSort extends Sort {
 
 	public static void main(String[] args){
-		int[] a = {2,1,5,7,3,8,9,0,4,6};
+		int[] a = {2,1};
 		MergeSort mergeSort=new MergeSort();
 		mergeSort.sort(a);
 		mergeSort.print(a);

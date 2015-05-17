@@ -3,13 +3,12 @@ package algorithm.leetcode;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class BuildTree {
 
 	public static void main(String[] args) {
-		int[] p = {1, 2};
-		int[] i = {2, 1};
-		
+		int[] p = { 1, 2 };
+		int[] i = { 2, 1};
+
 		new BuildTree().buildTree(p, i);
 	}
 
@@ -21,33 +20,32 @@ public class BuildTree {
 		TreeNode(int x) {
 			val = x;
 		}
-		public String toString(){
+
+		public String toString() {
 			return String.valueOf(val);
 		}
 	}
-	  public TreeNode buildTree(int[] inorder, int[] postorder) {
-	        if (inorder == null || inorder.length == 0){
-	            return null;
-	        }
-	        Map<Integer, Integer> map = new HashMap<>();
-	        for(int i = 0; i < inorder.length; i++){
-	            map.put(inorder[i], i);
+
+	 public TreeNode buildTree(int[] preorder, int[] inorder) {
+	        Map<Integer, Integer> inorderPos = new HashMap<>();
+	        for (int i = 0; i < inorder.length; i++){
+	            inorderPos.put(inorder[i], i);
 	        }
 	        
-	        return build(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1, map);
-	        
-	    }
-	    private TreeNode build(int[] inorder, int il, int ir, int[] postorder, int pl, int pr, Map<Integer, Integer> map){
-	        if (il > ir || pl > pr){
-	            return null;
-	        }
-	        
-	        int     val = postorder[pr];
-	        int pos = map.get(val);
-	        TreeNode node = new TreeNode(val);
-	        node.left = build(inorder, il, pos - 1, postorder, pl, pl + pos - il - 1, map);
-	        node.right = build(inorder, pos + 1, ir,postorder, pl + pos - il, pr- 1,  map);
-	        return node;
+	        return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inorderPos);
 	    }
 	    
+	    private TreeNode build(int[] preorder, int l1, int r1, int[] inorder, int l2, int r2, Map<Integer, Integer> inorderPos){
+	        int n = r1 - l1 + 1;
+	        if (n <= 0){
+	            return null;
+	        }
+	        TreeNode node = new TreeNode(preorder[l1]);
+	        int p = inorderPos.get(node.val);
+	        int leftSize = p - 1 - l2 + 1;
+	        node.left = build(preorder, l1 +1, l1 + leftSize, inorder, l2, p - 1, inorderPos);
+	        node.right = build(preorder, l1 + leftSize + 1, r1, inorder, p + 1, r2, inorderPos);
+	        return node;
+	        
+	    }
 }

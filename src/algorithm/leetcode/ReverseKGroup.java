@@ -9,14 +9,12 @@ public class ReverseKGroup {
 		ListNode n3 = new ListNode(3);
 		ListNode n4 = new ListNode(4);
 		ListNode n5 = new ListNode(5);
-		ListNode n6 = new ListNode(6);
 	
 		n1.next = n2;
-//		n2.next = n3;
-//		n3.next = n4;
-//		n4.next = n5;
-//		n5.next = n6;
-		ListNode res = new ReverseKGroup().reverseKGroup(n1, 2);
+		n2.next = n3;
+		n3.next = n4;
+		n4.next = n5;
+		ListNode res = new ReverseKGroup().reverseKGroup(n1, 1);
 		System.out.println(res);
 	}
 
@@ -34,40 +32,35 @@ public class ReverseKGroup {
 		}
 	}
 	
-	public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null || head.next == null || k == 1){
-            return head;
-        }
-       
-        ListNode helper = new ListNode(0);
-        helper.next = head;
-        ListNode n0 = helper;
-        ListNode start = head;
-        ListNode end = head;
-        int i = 1;
-        while (end != null && end.next != null){
-        	end = end.next;
-        	i ++;
-        	if (i == k){
-        		i = 1;
-        		n0.next = end;
-        		ListNode np = end.next;
-        		ListNode ns = start;
-        		while(np != end){
-        			ListNode n2 = ns.next;
-        			ns.next = np;
-        			np = ns;
-        			ns = n2;
-        		}
-        		end = start.next;
-        		n0 = start;
-        		start = start.next;
-        	}
-        }
-        
-        return helper.next;
-        
-        
-    }
-
+	 public ListNode reverseKGroup(ListNode head, int k) {
+	        if (head == null){
+	            return null;
+	        }
+	        ListNode newHead = new ListNode(0);
+	        newHead.next = head;
+	        
+	        ListNode prev = newHead;
+	        while(true){
+	            ListNode n0 = prev.next;
+	            ListNode n1 = prev.next;
+	            for (int i = 1; i <= k; i++){
+	                if (n1 == null){
+	                    return newHead.next;
+	                }
+	                n1 = n1.next;
+	            }
+	            
+	            ListNode n2 = n1;
+	            ListNode n3 = prev.next;
+	            while(n3 != n1){
+	                ListNode n4 = n3.next;
+	                n3.next = n2;
+	                n2 = n3;
+	                n3 = n4;
+	            }
+	            prev.next = n2;
+	            prev = n0;
+	            
+	        }
+	    }
 }

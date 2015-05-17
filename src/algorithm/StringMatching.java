@@ -11,7 +11,7 @@ public class StringMatching {
 
 	public static void main(String[] args) {
 		String text = "bcbabaabcacabcbaba";
-		String pattern  = "abaabcac";
+		String pattern  = "ababac";
 		
 		StringMatching stringMatching = new StringMatching();
 //		int index = stringMatching.search(text, pattern);

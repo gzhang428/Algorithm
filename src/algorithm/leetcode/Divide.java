@@ -1,32 +1,35 @@
 package algorithm.leetcode;
 
+import java.util.Arrays;
+
 public class Divide {
 
 	public static void main(String[] args) {
-		int res = new Divide().divide(-1010369383, -2147483648);
-		System.out.println(res);
+		System.out.println(Arrays.toString(" 1".split("\\s+")));
+//		int res = new Divide().divide(-2147483648, -1);
+//		System.out.println(res);
 	}
 
-	private int divide(int dividend, int divisor) {
+	public int divide(int dividend, int divisor) {
 		boolean negative = false;
 		if ((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0)) {
 			negative = true;
 		}
-		long a = Math.abs((long)dividend);
-		long b = Math.abs((long)divisor);
-		int r = 0;
+		long a = Math.abs((long) dividend);
+		long b = Math.abs((long) divisor);
+		long r = 0;
 		while (a >= b) {
 			int shift = 0;
-			long v = b;
-			while( v <= a){
-				v = v << 1;
-				shift ++;
+			while (a >= (b << shift)) {
+				shift++;
 			}
-			r += 1 << (shift - 1);
+			r += 1L << (shift - 1);
 			a -= b << (shift - 1);
-				
 		}
-		return negative ? -r : r;
+		if (r > Integer.MAX_VALUE) {
+			return Integer.MAX_VALUE;
+		}
+		return negative ? -(int) r : (int) r;
 	}
 
 }

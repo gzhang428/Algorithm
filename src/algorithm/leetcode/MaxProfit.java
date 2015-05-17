@@ -42,40 +42,5 @@ public class MaxProfit {
         return maxProfit;
         
     }
-	
-	  public boolean isPalindrome(String s) {
-	        if (s == null || s.length() == 0){
-	            return true;
-	        }
-	        
-	        int i = 0;
-	        int j = s.length() - 1;
-	        
-	        while(i <= j){
-	            char c1 = s.charAt(i);
-	            if ( c1 >= 'A' && c1 <= 'Z'){
-	                c1 = (char) (c1 - 'A' + 'a');
-	            }
-	            if (c1 < 'a'  || c1 > 'z'){
-	                i ++;
-	                continue;
-	            }
-	            
-	            char c2 = s.charAt(j);
-	            if ( c2 >= 'A' && c2 <= 'Z'){
-	                c2 = (char)(c2 - 'A' + 'a');
-	            }
-	            if (c2 < 'a' || c2 > 'z'){
-	                j --;
-	                continue;
-	            }
-	            
-	            if (c1 != c2){
-	                return false;
-	            }
-	            
-	        }
-	        return true;
-	    }
 
 }

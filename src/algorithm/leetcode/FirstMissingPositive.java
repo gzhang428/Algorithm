@@ -3,19 +3,17 @@ package algorithm.leetcode;
 public class FirstMissingPositive {
 
 	public static void main(String[] args) {
-		int[] A = { 3, 4, -1, 1 };
-		new FirstMissingPositive().firstMissingPositive(A);
+		int[] A = { -1, 1, 2};
+		int res = new FirstMissingPositive().firstMissingPositive(A);
+		System.out.println(res);
 	}
 
 	public int firstMissingPositive(int[] A) {
-		if (A.length == 0) {
-			return 1;
-		}
-
+		int n = A.length;
 		int i = 0;
-		while (i < A.length) {
+		while (i < n) {
 			int j = A[i] - 1;
-			if (j < A.length && A[i] > 0 && A[j] != A[i]) {
+			if (j != i && j >= 0 && j < n   && j < n && A[j] != A[i]) {
 				int t = A[i];
 				A[i] = A[j];
 				A[j] = t;
@@ -24,11 +22,11 @@ public class FirstMissingPositive {
 			}
 		}
 
-		for (i = 0; i < A.length; ++i) {
+		for (i = 0; i < n; ++i) {
 			if (A[i] != (i + 1)) {
 				return i + 1;
 			}
 		}
-		return A.length + 1;
+		return n + 1;
 	}
 }

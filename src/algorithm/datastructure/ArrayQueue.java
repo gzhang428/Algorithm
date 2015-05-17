@@ -14,7 +14,7 @@ public class ArrayQueue<T> implements Queue<T> {
 	
 	public ArrayQueue(int capacity) {
 		array = (T[]) new Object[capacity];
-		tail = -1;
+		tail = 0;
 		head = 0;
 		size = 0;
 		this.capacity = capacity;
@@ -36,8 +36,8 @@ public class ArrayQueue<T> implements Queue<T> {
 		if (isFull()){
 			resize();
 		}
-		tail = (tail + 1) % capacity;
 		array[tail] = t;
+		tail = (tail + 1) % capacity;
 		size ++;
 	}
 	

@@ -1,17 +1,18 @@
 package algorithm.leetcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SimplifyPath {
 
 	public static void main(String[] args) {
-		new SimplifyPath().simplifyPath("/...");
+		new SimplifyPath().simplifyPath("/a/./b/../../c/");
 	}
 	 public String simplifyPath(String path) {
 	        List<String> list = new ArrayList<>();
 	        String[] names = path.split("\\/+");
-	        
+	        System.out.println(Arrays.toString(names));
 	        for (String name: names){
 	            if (name.equals(".") || name.equals("")){
 	                

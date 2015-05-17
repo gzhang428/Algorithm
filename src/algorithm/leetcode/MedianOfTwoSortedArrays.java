@@ -3,57 +3,47 @@ package algorithm.leetcode;
 public class MedianOfTwoSortedArrays {
 
 	public static void main(String[] args) {
-		int[] A =  {100000};
-		int[] B =  {100001};
-		double res = new MedianOfTwoSortedArrays().findMedianSortedArrays(A , B);
+		int[] A = { 1, 2, 3 };
+		int[] B = { 1, 2 };
+		double res = new MedianOfTwoSortedArrays().findMedianSortedArrays(A, B);
 		System.out.println(res);
 	}
 
-	  public double findMedianSortedArrays(int A[], int B[]) {
-	        int m = A.length;
-	        int n = B.length;
-	        if ( (m + n) % 2 == 0){
-	            return (getMedian(A, 0, m,  B, 0, n, (m + n) / 2 - 1) + getMedian(A, 0, m , B, 0, n, (m + n) / 2)) / 2.0;
-	        } else {
-	            return getMedian(A, 0, m, B, 0, n, (m + n) / 2 );
-	        }
-	    }
-	    
-	    private int getMedian(int[] A, int start1, int l1, int[] B, int start2, int l2, int k){
-	    	int m1 = start1 + l1 / 2;
-	    	int m2 = start1 + l2 / 2;
-	    	
-	    	if (l1 <= 0){
-	    		return B[start2 + k];
-	    	}
-	    	if (l2 <= 0){
-	    		return A[start1 + k];
-	    	}
-	    	
-	    	if (k == 0){
-	    		return Math.min(A[start1], B[start2]);
-	    	}
-	    	
-	    	if ( k < (l1 + l2) / 2){
-	    		if (A[m1] < B[m2]){
-	    			// drop b2
-	    			return getMedian(A, start1, l1, B, start2, m2 - 1, k);
-	    		} else {
-	    			// drop a2
-	    			return getMedian(A, start1, m1 - 1, B, start2, l2, k);
-	    		}
-	    	} else  if (k > (l1 + l2) / 2){
-	    		if (A[m1] < B[m2]){
-	    			// drop a1
-	    			return getMedian(A, m1 + 1, l1 - m1 - 1, B, start2, l2, k - m1 - 1);
-	    		} else{
-	    			// drop b1
-	    			return getMedian(A, start1, l1, B, m2 + 1 , l2 - m2 - 1, k - m2 - 1);
-	    		} 
-	    	} else if (A[m1] == B[m2]){
-	    			return A[m1];
-	    	}
-	    	return 0;
-	    
-	    }
+	public double findMedianSortedArrays(int A[], int B[]) {
+		int m = A.length;
+		int n = B.length;
+
+		if ((m + n) % 2 == 0) {
+			return (median(A, 0, m - 1, B, 0, n - 1, (m + n) / 2 + 1) + median(A,
+					0, m - 1, B, 0, n - 1, (m + n) / 2)) / 2.0;
+		} else {
+			return median(A, 0, m - 1, B, 0, n - 1, (m + n) / 2 + 1);
+		}
+	}
+
+	private double median(int[] nums1, int l1, int h1, int[] nums2, int l2,	int h2, int k) {
+		int len1 = h1 - l1 + 1;
+		int len2 = h2 - l2 + 1;
+		if (len1 > len2){
+			return median(nums2, l2, h2, nums1, l1, h1, k);
+		}
+		if (len1 == 0) {
+			return nums2[l2 + k - 1];
+		}
+
+		if (k == 1){
+			return Math.min(nums1[l1], nums2[l2]);
+		}
+		
+		int p1 = Math.min(k / 2, len1);
+		int p2 = k - p1;
+		if (nums1[l1 + p1 - 1]  == nums2[l2 + p2 - 1]){
+			return nums1[l1 + p1 - 1];
+		} else if (nums1[l1 + p1 -1] < nums2[l2 + p2 - 1]){
+			return median(nums1, l1 + p1, h1, nums2, l2, h2, k - p1);
+		} else {
+			return median(nums1, l1, h1, nums2, l2 + p2, h2, k - p2);
+		}
+		
+	}
 }
