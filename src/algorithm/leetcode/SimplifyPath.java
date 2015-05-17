@@ -9,6 +9,7 @@ public class SimplifyPath {
 	public static void main(String[] args) {
 		new SimplifyPath().simplifyPath("/a/./b/../../c/");
 	}
+	
 	 public String simplifyPath(String path) {
 	        List<String> list = new ArrayList<>();
 	        String[] names = path.split("\\/+");
