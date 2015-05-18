@@ -1,31 +1,31 @@
 package algorithm.interview;
 
-import java.util.Arrays;
 
 public class LongestIncreasingSubsequence {
 
 	public static void main(String[] args) {
-
-		int[] array = {2, 3, 0, 4, 5, 7, 9, 8, 1, 6};
-		
-		
-		int[] res = new LongestIncreasingSubsequence().longestSubsequence(array);
-		System.out.println(Arrays.toString(res));
+		int[] a = {0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
+		int res = new LongestIncreasingSubsequence().find(a );
+		System.out.println(res);
 	}
 
-	private int[] longestSubsequence(int[] array) {
-		int start = 0;
-		int max = 0;
-		int[] res = {};
-		for (int i = 1; i < array.length; i++){
-			if (array[i] < array[i - 1]){
-				int len = i - 1 - start + 1;
-				if (len > max){
-					max = len;
-					res = Arrays.copyOfRange(array, start, i);
+	private int find(int[] a) {
+		int n = a.length;
+		int[] dp = new int[n];
+		
+		dp[0] = 1;
+		for (int i = 1; i < n; i++){
+			int max = 0;
+			for (int j = 0; j < i; j++){
+				if (a[j] <= a[i] && dp[j] > max){
+					max = dp[j];
 				}
-				start = i;
 			}
+			dp[i] = max + 1;
+		}
+		int res = 0;
+		for (int i: dp){
+			res = Math.max(i, res);
 		}
 		return res;
 	}
