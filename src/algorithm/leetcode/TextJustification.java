@@ -12,89 +12,60 @@ public class TextJustification {
 		System.out.println(res);
 	}
 
-	public List<String> fullJustify(String[] words, int L) {
-		List<String> res = new ArrayList<>();
-		if (words.length == 0) {
-			return res;
-		}
-
+	public List<String> fullJustify(String[] words, int maxWidth) {
 		int i = 0;
-		int charNum = 0;
-		List<String> lineWords = new ArrayList<>();
+		List<String> list = new ArrayList<>();
+		int len = 0;
+		List<String> res = new ArrayList<>();
 		while (i < words.length) {
 			String word = words[i];
-			charNum += word.length();
-			if (charNum == L) {
-				if (i == words.length - 1) {
-					lineWords.add(word);
-					String line = constructLine(lineWords, L, true);
-					res.add(line);
-					break;
-				} else {
-					lineWords.add(word);
-					String line = constructLine(lineWords, L, false);
-					res.add(line);
-					lineWords.clear();
-					charNum = 0;
-					i++;
-				}
-			} else if (charNum > L) {
-				String line = constructLine(lineWords, L, false);
-				res.add(line);
-				lineWords.clear();
-				charNum = 0;
+			if (len + word.length() <= maxWidth) {
+				list.add(word);
+				len += word.length() + 1;
 			} else {
-				if (i == words.length - 1) {
-					lineWords.add(word);
-					String line = constructLine(lineWords, L, true);
-					res.add(line);
-					break;
-				} else {
-					charNum++;
-					lineWords.add(word);
-					i++;
-				}
+				res.add(createLine(maxWidth, list, false));
+				list.clear();
+				list.add(word);
+				len = word.length() + 1;
 			}
-
+			i++;
 		}
-
+		res.add(createLine(maxWidth, list, true));
 		return res;
 	}
 
-	private String constructLine(List<String> lineWords, int l, boolean lastLine) {
-		int wordNum = lineWords.size();
+	private String createLine(int maxWidth, List<String> list, boolean isLast) {
 		StringBuilder sb = new StringBuilder();
-		if (wordNum == 1) {
-			sb.append(lineWords.get(0));
-		} else{
-			int charNum = 0;
-			for (String word : lineWords) {
-				charNum += word.length();
+		int n = list.size();
+		if (n == 1 || isLast) {
+			for (int i = 0; i < n - 1; i++) {
+				sb.append(list.get(i)).append(" ");
 			}
-			int spaces = l - charNum;
-			int avgSpace = spaces / (wordNum - 1);
-			int moreSpace = spaces % (wordNum - 1);
-	
-			for (int i = 0; i < wordNum - 1; i++) {
-				String word = lineWords.get(i);
-				sb.append(word);
-				if (lastLine){
-					sb.append(" ");
-				} else{
-					for (int j = 0; j < avgSpace; j++) {
-						sb.append(" ");
-					}
-					if (moreSpace > 0) {
-						sb.append(" ");
-						moreSpace--;
-					}
-				}
+			sb.append(list.get(n - 1));
+			while (sb.length() < maxWidth) {
+				sb.append(" ");
 			}
-			sb.append(lineWords.get(wordNum - 1));
+			return sb.toString();
 		}
-		for(int i = sb.length(); i< l; i++){
-			sb.append(" ");
+		int len = 0;
+		for (String word : list) {
+			len += word.length();
 		}
+		int spaces = (maxWidth - len) / (n - 1);
+		int extras = (maxWidth - len) % (n - 1);
+		for (int i = 0; i < n - 1; i++) {
+			sb.append(list.get(i));
+			int j = 0;
+			while (j < spaces) {
+				sb.append(" ");
+				j++;
+			}
+			if (extras > 0){
+				sb.append(" ");
+				extras--;
+			}
+		}
+		sb.append(list.get(n - 1));
 		return sb.toString();
 	}
 

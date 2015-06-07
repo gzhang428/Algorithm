@@ -7,7 +7,7 @@ import java.util.List;
 public class Subset {
 
 	public static void main(String[] args) {
-		int[] num = { 1, 1, 2 };
+		int[] num = { 1, 3, 2 };
 		List<List<Integer>> res = new Subset().subsetsWithDup(num);
 		System.out.println(res);
 	}
@@ -32,4 +32,5 @@ public class Subset {
 			list.remove(list.size() - 1);
 		}
 	}
+	
 }

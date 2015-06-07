@@ -7,7 +7,7 @@ public class Selection extends QuickSort {
 	public static void main(String[] args) {
 		int[] a = { 2, 1, 5, 7, 3, 8, 9, 0, 4, 6 };
 		Selection selection = new Selection();
-		int n = selection.select(a, 9);
+		int n = selection.select(a, 0);
 		System.out.println(n);
 	}
 

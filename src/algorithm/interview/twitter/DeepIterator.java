@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class DeepIterator<T> implements Iterator<T> {
-	private Stack<Iterator<?>> stack;
+	private Stack<Iterator<Object>> stack;
 	private T nextItem;
 	
 	public static void main(String[] args) {
@@ -58,11 +58,11 @@ public class DeepIterator<T> implements Iterator<T> {
 		}
 		
 		while(!stack.isEmpty()){
-			 Iterator<?> it = stack.peek();
+			 Iterator<Object> it = stack.peek();
 			 if (it.hasNext()){
 				 Object o = it.next();
-				 if (o instanceof List<?>){
-					 stack.push(((List<?>) o).iterator());
+				 if (o instanceof List){
+					 stack.push(((List) o).iterator());
 				 } else {
 					 nextItem = (T) o;
 					 return true;

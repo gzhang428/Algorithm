@@ -10,54 +10,51 @@ public class MinWindow {
 		System.out.println(res);
 	}
 
-	public String minWindow(String S, String T) {
-		if (S.length() < T.length()){
-			return "";
-		}
-		
-		Map<Character, Integer> map = new HashMap<>();
-		for (int i = 0; i < T.length(); i++){
-			char c = T.charAt(i);
-			if (map.containsKey(c)){
-				map.put(c, map.get(c) + 1);
+	public String minWindow(String s, String t) {
+		Map<Character, Integer> needToFind = new HashMap<>();
+		Map<Character, Integer> hasFound = new HashMap<>();
+		for (int i = 0; i < t.length(); i++) {
+			char c = t.charAt(i);
+			if (needToFind.containsKey(c)) {
+				needToFind.put(c, needToFind.get(c) + 1);
 			} else {
-				map.put(c, 1);
+				needToFind.put(c, 1);
 			}
+			hasFound.put(c, 0);
 		}
-		
-		int count = 0;
+		int start = 0;
+		int end = 0;
 		int min = Integer.MAX_VALUE;
 		String res = "";
-		int start = 0;
-		for (int end = 0; end < S.length(); end++){
-			char c = S.charAt(end);
-			if (map.containsKey(c)){
-				map.put(c, map.get(c) -1);
-				if (map.get(c) >= 0){
-					count++;
-					if (count == T.length()){
-						for (; start <= end; start++){
-							char c2 = S.charAt(start);
-							if (map.containsKey(c2)){
-								map.put(c2, map.get(c2) + 1);
-								if (map.get(c2) > 0){
-									count --;
-									String sub = S.substring(start, end + 1);
-									if (sub.length() < min){
-										min = sub.length();
-										res = sub;
-									}
-									start++;
-									break;
-								}
-							}
+		int len = 0;
+		for (; end < s.length(); end++) {
+			char c = s.charAt(end);
+			if (!hasFound.containsKey(c))
+				continue;
+			hasFound.put(c, hasFound.get(c) + 1);
+			if (hasFound.get(c) <= needToFind.get(c)) {
+				len++;
+			}
+
+			if (len == t.length()) {
+				for (; start <= end; start++) {
+					char c2 = s.charAt(start);
+					if (!hasFound.containsKey(c2))
+						continue;
+					hasFound.put(c2, hasFound.get(c2) - 1);
+					if (hasFound.get(c2) < needToFind.get(c2)) {
+						len--;
+						if (end - start + 1 < min) {
+							min = end - start + 1;
+							res = s.substring(start, end + 1);
 						}
+						start++;
+						break;
 					}
 				}
 			}
 		}
 		return res;
-		
 	}
 
 }

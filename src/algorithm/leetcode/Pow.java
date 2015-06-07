@@ -3,28 +3,30 @@ package algorithm.leetcode;
 public class Pow {
 
 	public static void main(String[] args) {
-		new Pow().myPow(8.8, 3);
+		double res = new Pow().myPow(2, 5);
+		System.out.println(res);
 	}
+	
 
 	public double myPow(double x, int n) {
-		if (n < 0) {
-			return 1 / calculate(x, -(long) n);
-		} else {
-			return calculate(x, (long) n);
-		}
-
-	}
-
-	private double calculate(double x, long n) {
-		if (n == 0){
+		if (n == 0) {
 			return 1;
 		}
-		double half = calculate(x, n / 2);
-		if (n % 2 == 0) {
-			return half * half;
-		} else {
-			return half * half * x;
+		boolean negative = false;
+		if (n < 0) {
+			n = -n;
+			negative = true;
 		}
-	}
 
+		double r = 1;
+		while (n > 0) {
+			if (n % 2 == 1){
+				r = r * x;
+			}
+			x = x * x;
+			n = n / 2;
+		}
+		return negative ? 1 / r : r;
+
+	}
 }

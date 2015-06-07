@@ -4,7 +4,6 @@ public class LongestCommonSubsequence {
 
 	public static void main(String[] args) {
 		int res = new LongestCommonSubsequence().find("thisisatest", "testing123testing");
-		System.out.println(res);
 	}
 
 	private int find(String s1, String s2) {
