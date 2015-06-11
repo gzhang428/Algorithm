@@ -21,7 +21,7 @@ public class BFS {
 
 	public List<Vertex> search(Graph g, int start){
 		List<Vertex> res = new ArrayList<>();
-		Queue<Vertex> queue = new ArrayQueue<Vertex>();
+		Queue<Vertex> queue = new ArrayQueue<Vertex>(100);
 		Vertex startVertex = g.vertice[start];
 		startVertex.distance = 0;
 		startVertex.visited = true;

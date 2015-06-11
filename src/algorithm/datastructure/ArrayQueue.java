@@ -1,64 +1,44 @@
 package algorithm.datastructure;
 
 public class ArrayQueue<T> implements Queue<T> {
-	private static final int DEFAULT_CAPACITY = 10;
 	private T[] array;
 	private int tail;
 	private int head;
-	private int size;
-	private int capacity;
 	
-	public ArrayQueue(){
-		this(DEFAULT_CAPACITY);
-	}
 	
 	public ArrayQueue(int capacity) {
 		array = (T[]) new Object[capacity];
 		tail = 0;
 		head = 0;
-		size = 0;
-		this.capacity = capacity;
 	}
 
 	public boolean isEmpty(){
-		return (size == 0);
+		return head == tail;
 	}
 	
 	public int size(){
-		return size;
+		if (tail < head){
+			return tail + array.length - head;
+		}
+		return tail - head;
 	}
 	
 	private boolean isFull(){
-		return (size == capacity);
+		return (tail + 1) % array.length == head;
 	}
 	
 	public void enqueue(T t){
-		if (isFull()){
-			resize();
-		}
 		array[tail] = t;
-		tail = (tail + 1) % capacity;
-		size ++;
+		tail = (tail + 1) % array.length;
 	}
 	
-	private void resize() {
-		T[] newArray = (T[]) new Object[capacity *  2];
-		for (int i = 0; i < size; i++){
-			newArray[i] = array[ (i + head) % capacity];
-		}
-		capacity *= 2;
-		head = 0;
-		tail = size - 1;
-		array = newArray;
-	}
 
 	public T dequeue() {
 		if(isEmpty()){
 			throw new RuntimeException();
 		}
 		T res = array[head];
-		head = (head + 1) % capacity;
-		size --;
+		head = (head + 1) % array.length;
 		return res ;
 	}
 	
